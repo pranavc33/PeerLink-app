@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'pages/home_page.dart';
 import 'shared/constants.dart';
+import 'helper/helper_function.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,11 +44,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   getUserLoggedInStatus() async {
-    await HelperFunctions.getUserLoggedInStatus().then((value) {
-      if (value != null) {
+    bool value = await HelperFunctions.getUserLoggedInStatus() ?? false;
+    if (value == null) value = false;
+    {
+      setState(() {
         _isSignedIn = value;
-      }
-    });
+      });
+    }
   }
 
   @override
